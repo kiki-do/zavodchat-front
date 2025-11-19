@@ -1,121 +1,130 @@
-export default {
-  root: true,
-  env: {
-    browser: true,
-    es2024: true,
-    node: true,
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import prettierPlugin from 'eslint-plugin-prettier';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const compat = new FlatCompat({
+  baseDirectory: dirname(fileURLToPath(import.meta.url)),
+  recommendedConfig: js.configs.recommended,
+});
+
+export default [
+  {
+    ignores: [
+      'node_modules/',
+      'dist/',
+      'build/',
+      'out/',
+      'out-tsc/',
+      'coverage/',
+      'tmp/',
+      '.nx/',
+      '.turbo/',
+      '.cache/',
+      '.eslintcache',
+      '.vscode/',
+      '.idea/',
+      '.git/',
+      '.yarn/',
+      '**/*.min.*',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
+      '**/test-output',
+      './src/main.tsx',
+    ],
   },
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  settings: {
-    react: {
-      version: "detect",
-    },
-  },
-  plugins: [
-    "react",
-    "simple-import-sort",
-    "import"
-  ],
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
-  rules: {
 
-    "no-multi-spaces": ["error", {
-      ignoreEOLComments: false,
-      exceptions: {
-        Property: false,
-        VariableDeclarator: false,
-        ImportDeclaration: false
-      }
-    }],
-    "no-trailing-spaces": "error",
-    "no-whitespace-before-property": "error",
-    "no-irregular-whitespace": "error",
-    "space-in-parens": ["error", "never"],
-    "space-before-function-paren": ["error", {
-      anonymous: "never",
-      named: "never",
-      asyncArrow: "always"
-    }],
-    "keyword-spacing": ["error", { before: true, after: true }],
-    "comma-spacing": ["error", { before: false, after: true }],
-    "semi-spacing": ["error", { before: false, after: true }],
-    "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "never"],
-    "spaced-comment": ["error", "always", { exceptions: ["-", "+"], markers: ["/"] }],
-    "padded-blocks": ["error", "never"],
-    "no-space-before-semi": "off",
-    "space-before-blocks": ["error", "always"],
-
-  
-    "import/no-duplicates": "error",
-    "import/newline-after-import": ["error", { "count": 1 }],
-    "simple-import-sort/imports": ["error", {
-      groups: [
-   
-        ["^node:"],
-  
-        ["^react", "^@?\\w"],
-
-        ["^(@|src)(/.*|$)"],
- 
-        ["^\\.\\./"],
-    
-        ["^\\./"],
-       
-        ["^.+\\.s?css$"]
-      ]
-    }],
-    "simple-import-sort/exports": "error",
- 
-    "sort-imports": "off",
-
-
-    "react/jsx-uses-react": "off", 
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off", 
-    "jsx-quotes": ["error", "prefer-double"],
-
-    "eqeqeq": ["error", "always"],
-    "no-duplicate-case": "error",
-    "no-empty": ["error", { "allowEmptyCatch": false }],
-    "no-undef": "error",
-    "no-unused-vars": ["error", { "args": "none", "ignoreRestSiblings": true }],
-    "curly": ["error", "all"],
-    "brace-style": ["error", "1tbs", { "allowSingleLine": false }],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "max-len": ["error", { "code": 120, "ignoreUrls": true, "ignoreStrings": true, "ignoreTemplateLiterals": true }],
-    "semi": ["error", "always"],
-    "quotes": ["error", "double", { "avoidEscape": true, "allowTemplateLiterals": true }],
-
-    /* ---------- Разрывы между логическими блоками ---------- */
-    "padding-line-between-statements": [
-      "error",
-      { "blankLine": "always", "prev": "*", "next": "return" },
-      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
-      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
-    ]
-  },
-  overrides: [
-    {
-      files: ["*.jsx", "*.tsx"],
+  ...compat
+    .config({
+      extends: [],
+    })
+    .map(config => ({
+      ...config,
+      files: ['**/*.ts', '**/*.tsx', '**/*.cts', '**/*.mts'],
       rules: {
-      
-        "react/jsx-curly-spacing": ["error", { "when": "never", "children": true }],
-        "react/jsx-tag-spacing": ["error", { "closingSlash": "never", "beforeSelfClosing": "always", "afterOpening": "never", "beforeClosing": "never" }]
-      }
+        ...config.rules,
+      },
+    })),
+
+  ...compat
+    .config({
+      extends: [],
+    })
+    .map(config => ({
+      ...config,
+      files: ['**/*.js', '**/*.jsx', '**/*.cjs', '**/*.mjs'],
+      rules: {
+        ...config.rules,
+      },
+    })),
+
+  ...compat
+    .config({
+      env: {
+        jest: true,
+      },
+    })
+    .map(config => ({
+      ...config,
+      files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'],
+      rules: {
+        ...config.rules,
+      },
+    })),
+
+  // Project-wide rules
+  {
+    files: [
+      '**/*.ts',
+      '**/*.tsx',
+      '**/*.cts',
+      '**/*.mts',
+      '**/*.js',
+      '**/*.jsx',
+      '**/*.cjs',
+      '**/*.mjs',
+    ],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
     },
-    {
-      files: ["*.test.js", "*.spec.js"],
-      env: { jest: true }
-    }
-  ]
-};
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+      prettier: prettierPlugin,
+      '@typescript-eslint': tsPlugin,
+    },
+    rules: {
+      // импорт сортировка
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^\u0000'],
+            ['^node:'],
+            ['^@?\\w'],
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+            ['^.+\\.s?css$'],
+          ],
+        },
+      ],
+      'simple-import-sort/exports': 'error',
+
+      'sort-imports': 'off',
+
+      // Prettier errors
+      'prettier/prettier': 'error',
+    },
+  },
+
+  eslintConfigPrettier,
+];
