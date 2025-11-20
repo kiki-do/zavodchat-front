@@ -77,7 +77,6 @@ export default [
       },
     })),
 
-  // Project-wide rules
   {
     files: [
       '**/*.ts',
@@ -103,7 +102,6 @@ export default [
       '@typescript-eslint': tsPlugin,
     },
     rules: {
-      // импорт сортировка
       'simple-import-sort/imports': [
         'error',
         {
@@ -121,7 +119,6 @@ export default [
 
       'sort-imports': 'off',
 
-      // Prettier errors
       'prettier/prettier': 'error',
     },
   },
