@@ -15,9 +15,9 @@ get_emoji() {
     style) echo "🎨" ;;
     refactor) echo "♻️" ;;
     test) echo "✅" ;;
-    chore) echo "🔧" ;;
+    chore) echo "⚒️" ;;
     build) echo "🏗" ;;
-    ci) echo "👷" ;;
+    ci) echo "👷" ;;  
     revert) echo "⏪" ;;
     perf) echo "⚡️" ;;
     *) echo "" ;;
