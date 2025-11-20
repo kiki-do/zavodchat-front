@@ -1,5 +1,6 @@
 export * from './badge';
 export * from './button';
+export * from './context-menu';
 export * from './item';
 export * from './modal';
 export * from './separator';
