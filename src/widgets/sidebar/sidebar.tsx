@@ -1,18 +1,34 @@
+import { Link } from '@tanstack/react-router';
+import { Handshake, List, SmilePlus } from 'lucide-react';
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Channels } from './channels/channels';
 
 import { Item, ItemGroup } from '@/shared/ui';
 
 export const Sidebar: FC = () => {
+  const { t } = useTranslation('translations', { keyPrefix: 'sidebarLink' });
+
+  const items = [
+    { name: t('friends'), icon: <Handshake size={16} />, href: '/' },
+    { name: t('request'), icon: <SmilePlus size={16} />, href: '/' },
+    { name: t('servers_list'), icon: <List size={16} />, href: '/' },
+  ];
+
   return (
     <aside className="flex w-full gap-2 p-1">
       <Channels />
       <div className="bg-accent flex w-full flex-col overflow-y-auto rounded-md p-4">
-        <ItemGroup>
-          <Item size="sm" variant="outline">
-            asdasd
-          </Item>
+        <ItemGroup className="space-y-2">
+          {items.map(({ name, icon, href }, index) => (
+            <Link to={href} key={index}>
+              <Item size="sm" variant="outline">
+                {icon}
+                {name}
+              </Item>
+            </Link>
+          ))}
         </ItemGroup>
       </div>
     </aside>
