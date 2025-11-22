@@ -4,6 +4,7 @@
   "loginPage": {
     "title": "Войдите в ваш аккаунт",
     "description": "Введите свои логин и пароль ниже, чтобы войти в свою учетную запись.",
+
     "usernameLabel": "Логин",
     "passwordLabel": "Пароль",
     "usernamePlaceholder": "Введите ваш логин",
@@ -16,5 +17,26 @@
 
     "footerDescription": "Вы у нас новенький?",
     "registerRedirect": "Зарегистрируйся"
+  },
+
+  "registerPage": {
+    "title": "Зарегистрируйте в ваш аккаунт",
+    "description": "Введите свои логин и пароль ниже, чтобы создать свою учетную запись.",
+
+    "usernameLabel": "Логин",
+    "displaNameLabel": "Отображаемое имя",
+    "displayNameDescription": "Это ваш никнейм, который будет отображаться для всех юзеров.",
+    "passwordLabel": "Пароль",
+    "usernamePlaceholder": "Введите ваш логин",
+    "passwordPlaceholder": "Введите ваш пароль",
+    "submit": "Зарегистрироваться",
+
+    "usernameMinError": "Логин должен содержать не менее 2 символов.",
+    "displayNameMinError": "Отображаемое имя должно содержать не менее 2 символов.",
+    "passwordMinError": "Пароль должен содержать не менее 8 символов.",
+    "passwordMaxError": "Пароль должен содержать не более 32 символов.",
+
+    "footerDescription": "Вы у нас бывалый?",
+    "loginRedirect": "Войти"
   }
 }

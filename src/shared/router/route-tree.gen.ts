@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './../../app/routes/__root';
+import { Route as VerificationRouteImport } from './../../app/routes/verification';
 import { Route as RegisterRouteImport } from './../../app/routes/register';
 import { Route as LoginRouteImport } from './../../app/routes/login';
 import { Route as ProtectedRouteImport } from './../../app/routes/_protected';
 import { Route as ProtectedIndexRouteImport } from './../../app/routes/_protected/index';
 
+const VerificationRoute = VerificationRouteImport.update({
+  id: '/verification',
+  path: '/verification',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -37,11 +43,13 @@ const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute;
   '/register': typeof RegisterRoute;
+  '/verification': typeof VerificationRoute;
   '/': typeof ProtectedIndexRoute;
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute;
   '/register': typeof RegisterRoute;
+  '/verification': typeof VerificationRoute;
   '/': typeof ProtectedIndexRoute;
 }
 export interface FileRoutesById {
@@ -49,24 +57,39 @@ export interface FileRoutesById {
   '/_protected': typeof ProtectedRouteWithChildren;
   '/login': typeof LoginRoute;
   '/register': typeof RegisterRoute;
+  '/verification': typeof VerificationRoute;
   '/_protected/': typeof ProtectedIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/login' | '/register' | '/';
+  fullPaths: '/login' | '/register' | '/verification' | '/';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/login' | '/register' | '/';
-  id: '__root__' | '/_protected' | '/login' | '/register' | '/_protected/';
+  to: '/login' | '/register' | '/verification' | '/';
+  id:
+    | '__root__'
+    | '/_protected'
+    | '/login'
+    | '/register'
+    | '/verification'
+    | '/_protected/';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   ProtectedRoute: typeof ProtectedRouteWithChildren;
   LoginRoute: typeof LoginRoute;
   RegisterRoute: typeof RegisterRoute;
+  VerificationRoute: typeof VerificationRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verification': {
+      id: '/verification';
+      path: '/verification';
+      fullPath: '/verification';
+      preLoaderRoute: typeof VerificationRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/register': {
       id: '/register';
       path: '/register';
@@ -114,6 +137,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProtectedRoute: ProtectedRouteWithChildren,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  VerificationRoute: VerificationRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

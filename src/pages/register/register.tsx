@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import type { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { loginSchema } from './schema';
+import { registerSchema } from './schema';
 
 import {
   Button,
@@ -17,6 +17,7 @@ import {
   CardTitle,
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,15 +25,18 @@ import {
   Input,
 } from '@/shared/ui';
 
-export const Login: FC = () => {
-  const { t } = useTranslation('translations', { keyPrefix: 'loginPage' });
+export const Register: FC = () => {
+  const { t } = useTranslation('translations', { keyPrefix: 'registerPage' });
 
-  const schema = loginSchema(t);
+  const schema = registerSchema(t);
+
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       username: '',
+      displayName: '',
       password: '',
     },
   });
@@ -41,6 +45,8 @@ export const Login: FC = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+
+    navigate({ to: '/verification' });
   }
 
   return (
@@ -67,6 +73,23 @@ export const Login: FC = () => {
             />
             <FormField
               control={form.control}
+              name="displayName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('displaNameLabel')}</FormLabel>
+                  <FormDescription>
+                    {t('displayNameDescription')}
+                  </FormDescription>
+                  <FormControl>
+                    <Input placeholder={t('passwordPlaceholder')} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -90,10 +113,10 @@ export const Login: FC = () => {
         <CardDescription>
           {t('footerDescription')}{' '}
           <Link
-            to="/register"
+            to="/login"
             className="transition hover:text-white hover:underline"
           >
-            {t('registerRedirect')}
+            {t('loginRedirect')}
           </Link>
         </CardDescription>
       </CardFooter>
@@ -101,4 +124,4 @@ export const Login: FC = () => {
   );
 };
 
-Login.displayName = 'Login';
+Register.displayName = 'Register';
