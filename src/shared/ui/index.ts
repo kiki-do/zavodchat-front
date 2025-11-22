@@ -4,6 +4,7 @@ export * from './card';
 export * from './context-menu';
 export * from './form';
 export * from './input';
+export * from './input-otp';
 export * from './item';
 export * from './label';
 export * from './modal';

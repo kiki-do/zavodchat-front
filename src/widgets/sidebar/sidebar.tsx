@@ -6,7 +6,7 @@ import { Item, ItemGroup } from '@/shared/ui';
 
 export const Sidebar: FC = () => {
   return (
-    <aside className="flex gap-2 p-1">
+    <aside className="flex w-full gap-2 p-1">
       <Channels />
       <div className="bg-accent flex w-full flex-col overflow-y-auto rounded-md p-4">
         <ItemGroup>
