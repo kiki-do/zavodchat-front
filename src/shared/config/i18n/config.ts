@@ -8,7 +8,7 @@ i18n
   .use(initReactI18next)
   .use(
     resourcesToBackend((lng: string) =>
-      import(`./resources/${lng}/translations.json`).then(m => m.default)
+      import(`./resourses/${lng}/translations.json`).then(m => m.default)
     )
   )
   .init({

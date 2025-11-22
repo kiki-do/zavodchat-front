@@ -1,3 +1,20 @@
 {
-  "greeting": "Заводчат на связи !"
+  "greeting": "Заводчат на связи !",
+
+  "loginPage": {
+    "title": "Войдите в ваш аккаунт",
+    "description": "Введите свои логин и пароль ниже, чтобы войти в свою учетную запись.",
+    "usernameLabel": "Логин",
+    "passwordLabel": "Пароль",
+    "usernamePlaceholder": "Введите ваш логин",
+    "passwordPlaceholder": "Введите ваш пароль",
+    "submit": "Войти",
+
+    "usernameMinError": "Логин должен содержать не менее 2 символов.",
+    "passwordMinError": "Пароль должен содержать не менее 8 символов.",
+    "passwordMaxError": "Пароль должен содержать не более 32 символов.",
+
+    "footerDescription": "Вы у нас новенький?",
+    "registerRedirect": "Зарегистрируйся"
+  }
 }
