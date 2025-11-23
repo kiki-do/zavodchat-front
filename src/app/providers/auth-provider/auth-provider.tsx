@@ -1,26 +1,17 @@
-import type { FC, PropsWithChildren, SetStateAction } from 'react';
-import { createContext, Dispatch, useContext, useMemo, useState } from 'react';
+import type { FC, PropsWithChildren } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
+import { useCookie } from '@/shared/hooks';
+
+const AUTH_COOKIE_NAME = 'zavodchat_token';
 export interface AuthContextValue {
-  /**
-   * @description
-   */
   isAuthenticated: boolean;
-
-  /**
-   * @description
-   */
-  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  token: string | unknown;
+  logout: () => void;
 }
 
-/**
- * @description
- */
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
-/**
- * @description
- */
 export const useAuth = () => {
   const context = useContext(AuthContext);
 
@@ -29,18 +20,28 @@ export const useAuth = () => {
   return context;
 };
 
-/**
- * @description
- */
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { value: token, remove: removeToken } = useCookie(AUTH_COOKIE_NAME, {});
+
+  const isAuthenticated = !!token;
+
+  const logout = () => {
+    removeToken({
+      path: '/',
+      secure: true,
+      sameSite: 'None',
+    });
+    window.location.href = '/login';
+  };
 
   const value = useMemo(
-    () => ({ isAuthenticated, setIsAuthenticated }),
-    [isAuthenticated]
+    () => ({
+      isAuthenticated,
+      token,
+      logout,
+    }),
+    [isAuthenticated, token]
   );
-
-  console.debug('DEBUG (AuthProvider)', value);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

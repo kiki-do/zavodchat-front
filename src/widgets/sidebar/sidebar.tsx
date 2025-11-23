@@ -12,8 +12,8 @@ export const Sidebar: FC = () => {
 
   const items = [
     { name: t('friends'), icon: <Handshake size={16} />, href: '/' },
-    { name: t('request'), icon: <SmilePlus size={16} />, href: '/' },
-    { name: t('servers_list'), icon: <List size={16} />, href: '/' },
+    { name: t('request'), icon: <SmilePlus size={16} />, href: '/requests' },
+    { name: t('serversList'), icon: <List size={16} />, href: '/servers' },
   ];
 
   return (

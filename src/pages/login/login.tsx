@@ -5,8 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { useLogin } from './api';
 import { loginSchema } from './schema';
 
+import { useAuth } from '@/app/providers';
+import { useCookie } from '@/shared/hooks';
 import {
   Button,
   Card,
@@ -29,6 +32,8 @@ export const Login: FC = () => {
 
   const schema = loginSchema(t);
 
+  const loginMutation = useLogin();
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -37,12 +42,24 @@ export const Login: FC = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof schema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof schema>) => {
+    loginMutation.mutateAsync({
+      params: {
+        header: {
+          Username: values.username,
+          Password: values.password,
+        },
+      },
+    });
+  };
 
+  const AUTH_COOKIE_NAME = 'zavodchat_token';
+
+  const { value: token, remove: removeToken } = useCookie(AUTH_COOKIE_NAME, {});
+  console.log(token);
+  const auth = useAuth();
+
+  console.log(auth.isAuthenticated);
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>

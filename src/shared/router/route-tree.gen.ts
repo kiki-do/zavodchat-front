@@ -8,163 +8,207 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './../../app/routes/__root'
-import { Route as UnprotectedRouteImport } from './../../app/routes/_unprotected'
-import { Route as ProtectedRouteImport } from './../../app/routes/_protected'
-import { Route as ProtectedIndexRouteImport } from './../../app/routes/_protected/index'
-import { Route as UnprotectedVerificationRouteImport } from './../../app/routes/_unprotected/verification'
-import { Route as UnprotectedRegisterRouteImport } from './../../app/routes/_unprotected/register'
-import { Route as UnprotectedLoginRouteImport } from './../../app/routes/_unprotected/login'
+import { Route as rootRouteImport } from './../../app/routes/__root';
+import { Route as UnprotectedRouteImport } from './../../app/routes/_unprotected';
+import { Route as ProtectedRouteImport } from './../../app/routes/_protected';
+import { Route as ProtectedIndexRouteImport } from './../../app/routes/_protected/index';
+import { Route as UnprotectedVerificationRouteImport } from './../../app/routes/_unprotected/verification';
+import { Route as UnprotectedRegisterRouteImport } from './../../app/routes/_unprotected/register';
+import { Route as UnprotectedLoginRouteImport } from './../../app/routes/_unprotected/login';
+import { Route as ProtectedServersRouteImport } from './../../app/routes/_protected/servers';
+import { Route as ProtectedRequestsRouteImport } from './../../app/routes/_protected/requests';
 
 const UnprotectedRoute = UnprotectedRouteImport.update({
   id: '/_unprotected',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ProtectedRoute,
-} as any)
+} as any);
 const UnprotectedVerificationRoute = UnprotectedVerificationRouteImport.update({
   id: '/verification',
   path: '/verification',
   getParentRoute: () => UnprotectedRoute,
-} as any)
+} as any);
 const UnprotectedRegisterRoute = UnprotectedRegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => UnprotectedRoute,
-} as any)
+} as any);
 const UnprotectedLoginRoute = UnprotectedLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => UnprotectedRoute,
-} as any)
+} as any);
+const ProtectedServersRoute = ProtectedServersRouteImport.update({
+  id: '/servers',
+  path: '/servers',
+  getParentRoute: () => ProtectedRoute,
+} as any);
+const ProtectedRequestsRoute = ProtectedRequestsRouteImport.update({
+  id: '/requests',
+  path: '/requests',
+  getParentRoute: () => ProtectedRoute,
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/login': typeof UnprotectedLoginRoute
-  '/register': typeof UnprotectedRegisterRoute
-  '/verification': typeof UnprotectedVerificationRoute
-  '/': typeof ProtectedIndexRoute
+  '/requests': typeof ProtectedRequestsRoute;
+  '/servers': typeof ProtectedServersRoute;
+  '/login': typeof UnprotectedLoginRoute;
+  '/register': typeof UnprotectedRegisterRoute;
+  '/verification': typeof UnprotectedVerificationRoute;
+  '/': typeof ProtectedIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/login': typeof UnprotectedLoginRoute
-  '/register': typeof UnprotectedRegisterRoute
-  '/verification': typeof UnprotectedVerificationRoute
-  '/': typeof ProtectedIndexRoute
+  '/requests': typeof ProtectedRequestsRoute;
+  '/servers': typeof ProtectedServersRoute;
+  '/login': typeof UnprotectedLoginRoute;
+  '/register': typeof UnprotectedRegisterRoute;
+  '/verification': typeof UnprotectedVerificationRoute;
+  '/': typeof ProtectedIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/_protected': typeof ProtectedRouteWithChildren
-  '/_unprotected': typeof UnprotectedRouteWithChildren
-  '/_unprotected/login': typeof UnprotectedLoginRoute
-  '/_unprotected/register': typeof UnprotectedRegisterRoute
-  '/_unprotected/verification': typeof UnprotectedVerificationRoute
-  '/_protected/': typeof ProtectedIndexRoute
+  __root__: typeof rootRouteImport;
+  '/_protected': typeof ProtectedRouteWithChildren;
+  '/_unprotected': typeof UnprotectedRouteWithChildren;
+  '/_protected/requests': typeof ProtectedRequestsRoute;
+  '/_protected/servers': typeof ProtectedServersRoute;
+  '/_unprotected/login': typeof UnprotectedLoginRoute;
+  '/_unprotected/register': typeof UnprotectedRegisterRoute;
+  '/_unprotected/verification': typeof UnprotectedVerificationRoute;
+  '/_protected/': typeof ProtectedIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/register' | '/verification' | '/'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/register' | '/verification' | '/'
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths:
+    | '/requests'
+    | '/servers'
+    | '/login'
+    | '/register'
+    | '/verification'
+    | '/';
+  fileRoutesByTo: FileRoutesByTo;
+  to: '/requests' | '/servers' | '/login' | '/register' | '/verification' | '/';
   id:
     | '__root__'
     | '/_protected'
     | '/_unprotected'
+    | '/_protected/requests'
+    | '/_protected/servers'
     | '/_unprotected/login'
     | '/_unprotected/register'
     | '/_unprotected/verification'
-    | '/_protected/'
-  fileRoutesById: FileRoutesById
+    | '/_protected/';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  ProtectedRoute: typeof ProtectedRouteWithChildren
-  UnprotectedRoute: typeof UnprotectedRouteWithChildren
+  ProtectedRoute: typeof ProtectedRouteWithChildren;
+  UnprotectedRoute: typeof UnprotectedRouteWithChildren;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/_unprotected': {
-      id: '/_unprotected'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof UnprotectedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_unprotected';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof UnprotectedRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_protected': {
-      id: '/_protected'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof ProtectedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/_protected';
+      path: '';
+      fullPath: '';
+      preLoaderRoute: typeof ProtectedRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/_protected/': {
-      id: '/_protected/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof ProtectedIndexRouteImport
-      parentRoute: typeof ProtectedRoute
-    }
+      id: '/_protected/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof ProtectedIndexRouteImport;
+      parentRoute: typeof ProtectedRoute;
+    };
     '/_unprotected/verification': {
-      id: '/_unprotected/verification'
-      path: '/verification'
-      fullPath: '/verification'
-      preLoaderRoute: typeof UnprotectedVerificationRouteImport
-      parentRoute: typeof UnprotectedRoute
-    }
+      id: '/_unprotected/verification';
+      path: '/verification';
+      fullPath: '/verification';
+      preLoaderRoute: typeof UnprotectedVerificationRouteImport;
+      parentRoute: typeof UnprotectedRoute;
+    };
     '/_unprotected/register': {
-      id: '/_unprotected/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof UnprotectedRegisterRouteImport
-      parentRoute: typeof UnprotectedRoute
-    }
+      id: '/_unprotected/register';
+      path: '/register';
+      fullPath: '/register';
+      preLoaderRoute: typeof UnprotectedRegisterRouteImport;
+      parentRoute: typeof UnprotectedRoute;
+    };
     '/_unprotected/login': {
-      id: '/_unprotected/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof UnprotectedLoginRouteImport
-      parentRoute: typeof UnprotectedRoute
-    }
+      id: '/_unprotected/login';
+      path: '/login';
+      fullPath: '/login';
+      preLoaderRoute: typeof UnprotectedLoginRouteImport;
+      parentRoute: typeof UnprotectedRoute;
+    };
+    '/_protected/servers': {
+      id: '/_protected/servers';
+      path: '/servers';
+      fullPath: '/servers';
+      preLoaderRoute: typeof ProtectedServersRouteImport;
+      parentRoute: typeof ProtectedRoute;
+    };
+    '/_protected/requests': {
+      id: '/_protected/requests';
+      path: '/requests';
+      fullPath: '/requests';
+      preLoaderRoute: typeof ProtectedRequestsRouteImport;
+      parentRoute: typeof ProtectedRoute;
+    };
   }
 }
 
 interface ProtectedRouteChildren {
-  ProtectedIndexRoute: typeof ProtectedIndexRoute
+  ProtectedRequestsRoute: typeof ProtectedRequestsRoute;
+  ProtectedServersRoute: typeof ProtectedServersRoute;
+  ProtectedIndexRoute: typeof ProtectedIndexRoute;
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedRequestsRoute: ProtectedRequestsRoute,
+  ProtectedServersRoute: ProtectedServersRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
-}
+};
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
-  ProtectedRouteChildren,
-)
+  ProtectedRouteChildren
+);
 
 interface UnprotectedRouteChildren {
-  UnprotectedLoginRoute: typeof UnprotectedLoginRoute
-  UnprotectedRegisterRoute: typeof UnprotectedRegisterRoute
-  UnprotectedVerificationRoute: typeof UnprotectedVerificationRoute
+  UnprotectedLoginRoute: typeof UnprotectedLoginRoute;
+  UnprotectedRegisterRoute: typeof UnprotectedRegisterRoute;
+  UnprotectedVerificationRoute: typeof UnprotectedVerificationRoute;
 }
 
 const UnprotectedRouteChildren: UnprotectedRouteChildren = {
   UnprotectedLoginRoute: UnprotectedLoginRoute,
   UnprotectedRegisterRoute: UnprotectedRegisterRoute,
   UnprotectedVerificationRoute: UnprotectedVerificationRoute,
-}
+};
 
 const UnprotectedRouteWithChildren = UnprotectedRoute._addFileChildren(
-  UnprotectedRouteChildren,
-)
+  UnprotectedRouteChildren
+);
 
 const rootRouteChildren: RootRouteChildren = {
   ProtectedRoute: ProtectedRouteWithChildren,
   UnprotectedRoute: UnprotectedRouteWithChildren,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

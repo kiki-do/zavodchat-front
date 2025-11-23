@@ -5,6 +5,7 @@ import { paths } from './openapi';
 
 export const client = createFetchClient<paths>({
   baseUrl: import.meta.env.VITE_API_BASE_URL,
+  credentials: 'include',
 });
 
 // client.use(authorization);

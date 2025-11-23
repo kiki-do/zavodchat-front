@@ -9,7 +9,7 @@ export const loginSchema = (t: TFunction<'translations', 'loginPage'>) =>
 
     password: z
       .string()
-      .min(8, { message: t('passwordMinError') })
+      .min(6, { message: t('passwordMinError') })
       .max(32, {
         message: t('passwordMaxError'),
       }),
