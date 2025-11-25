@@ -7,10 +7,8 @@ export const useLogin = () => {
 
   return $api.useMutation('post', '/auth', {
     onSuccess: () => {
-      setTimeout(() => {
-        router.invalidate();
-        router.history.push('/');
-      }, 50);
+      router.invalidate();
+      router.history.push('/');
     },
   });
 };

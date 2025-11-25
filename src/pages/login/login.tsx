@@ -9,7 +9,6 @@ import { useLogin } from './api';
 import { loginSchema } from './schema';
 
 import { useAuth } from '@/app/providers';
-import { useCookie } from '@/shared/hooks';
 import {
   Button,
   Card,
@@ -44,19 +43,13 @@ export const Login: FC = () => {
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
     loginMutation.mutateAsync({
-      params: {
-        header: {
-          Username: values.username,
-          Password: values.password,
-        },
+      body: {
+        username: values.username,
+        password: values.password,
       },
     });
   };
 
-  const AUTH_COOKIE_NAME = 'zavodchat_token';
-
-  const { value: token, remove: removeToken } = useCookie(AUTH_COOKIE_NAME, {});
-  console.log(token);
   const auth = useAuth();
 
   console.log(auth.isAuthenticated);
@@ -117,5 +110,3 @@ export const Login: FC = () => {
     </Card>
   );
 };
-
-Login.displayName = 'Login';

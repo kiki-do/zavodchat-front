@@ -17,16 +17,20 @@ export interface paths {
     post: {
       parameters: {
         query?: never;
-        header: {
-          /** @description Логин пользователя */
-          Username: string;
-          /** @description Пароль пользователя */
-          Password: string;
-        };
+        header?: never;
         path?: never;
         cookie?: never;
       };
-      requestBody?: never;
+      requestBody?: {
+        content: {
+          'application/json': {
+            /** @example chetkii_poc */
+            username?: string;
+            /** @example 12345678 */
+            password?: string;
+          };
+        };
+      };
       responses: {
         /** @description Успешная авторизация */
         200: {
@@ -63,18 +67,22 @@ export interface paths {
     put: {
       parameters: {
         query?: never;
-        header: {
-          /** @description Логин пользователя */
-          Username: string;
-          /** @description Псевдоним пользователя */
-          Displayname: string;
-          /** @description Пароль пользователя */
-          Password: string;
-        };
+        header?: never;
         path?: never;
         cookie?: never;
       };
-      requestBody?: never;
+      requestBody?: {
+        content: {
+          'application/json': {
+            /** @example chetkii_poc */
+            username?: string;
+            /** @example Чёткий П0цык */
+            displayname?: string;
+            /** @example 12345678 */
+            password?: string;
+          };
+        };
+      };
       responses: {
         /** @description Успешная регистрация */
         200: {
@@ -102,24 +110,31 @@ export interface paths {
     /** Изменение данных пользователя */
     post: {
       parameters: {
-        query?: never;
-        header?: {
-          /** @description Логин пользователя */
-          Username?: string;
-          /** @description Псевдоним пользователя */
-          Displayname?: string;
-          /** @description Пароль пользователя */
-          Password?: string;
+        query?: {
+          /** @description Аватар пользователя */
+          avatar?: string;
         };
+        header?: never;
         path?: never;
         cookie: {
           /** @description Токен авторизации */
           zavodchat_token: parameters['zavodchat_token'];
         };
       };
-      requestBody?: never;
+      requestBody?: {
+        content: {
+          'application/json': {
+            /** @example realnii_poc */
+            username?: string;
+            /** @example рЯльНыЙ____ПОЦЦЦЦЦ */
+            displayname?: string;
+            /** @example letmein123 */
+            password?: string;
+          };
+        };
+      };
       responses: {
-        /** @description Успешная регистрация */
+        /** @description Успешное изменение данных */
         200: {
           headers: {
             [name: string]: unknown;

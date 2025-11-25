@@ -21,7 +21,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { value: token, remove: removeToken } = useCookie(AUTH_COOKIE_NAME, {});
+  const { value: token, remove: removeToken } = useCookie(AUTH_COOKIE_NAME);
 
   const isAuthenticated = !!token;
 
