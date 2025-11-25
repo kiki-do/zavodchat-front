@@ -1,7 +1,8 @@
-import { PlusCircle } from 'lucide-react';
 import type { FC } from 'react';
 
-import { Button, ItemGroup, ItemMedia } from '@/shared/ui';
+import { CreateServerModal } from './create-server-modal';
+
+import { ItemGroup, ItemMedia } from '@/shared/ui';
 
 export const Channels: FC = () => {
   return (
@@ -12,11 +13,7 @@ export const Channels: FC = () => {
         </ItemMedia>
       </ItemGroup>
 
-      <ItemMedia variant="icon" tooltip={'asdasda'} className="mt-auto">
-        <Button variant="ghost">
-          <PlusCircle />
-        </Button>
-      </ItemMedia>
+      <CreateServerModal />
     </div>
   );
 };

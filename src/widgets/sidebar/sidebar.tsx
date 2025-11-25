@@ -3,7 +3,7 @@ import { Handshake, List, SmilePlus } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Channels } from './channels/channels';
+import { Channels } from './channels';
 
 import { Item, ItemGroup } from '@/shared/ui';
 
