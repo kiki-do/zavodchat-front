@@ -12,8 +12,11 @@
     "submit": "Войти",
 
     "usernameMinError": "Логин должен содержать не менее 2 символов.",
-    "passwordMinError": "Пароль должен содержать не менее 6 символов.",
+    "passwordMinError": "Пароль должен содержать не менее 8 символов.",
     "passwordMaxError": "Пароль должен содержать не более 32 символов.",
+
+    "loginSuccess": "Успешный вход в систему",
+    "loginError": "Неправильный логин или пароль",
 
     "footerDescription": "Вы у нас новенький?",
     "registerRedirect": "Зарегистрируйся"
@@ -26,6 +29,7 @@
     "usernameLabel": "Логин",
     "displaNameLabel": "Отображаемое имя",
     "displayNameDescription": "Это ваш никнейм, который будет отображаться для всех юзеров.",
+    "displayNamePlaceholder": "Введите ваше отображаемое имя",
     "passwordLabel": "Пароль",
     "usernamePlaceholder": "Введите ваш логин",
     "passwordPlaceholder": "Введите ваш пароль",
@@ -61,5 +65,10 @@
     "namePlaceholder": "Придумайте название сервера",
 
     "nameMinError": "Название сервера должно содержать не менее 2 символов."
+  },
+
+  "userPanel": {
+    "online": "В сети",
+    "offline": "Не в сети"
   }
 }

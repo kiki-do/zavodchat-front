@@ -15,6 +15,7 @@ import { Route as ProtectedIndexRouteImport } from './../../app/routes/_protecte
 import { Route as UnprotectedVerificationRouteImport } from './../../app/routes/_unprotected/verification';
 import { Route as UnprotectedRegisterRouteImport } from './../../app/routes/_unprotected/register';
 import { Route as UnprotectedLoginRouteImport } from './../../app/routes/_unprotected/login';
+import { Route as ProtectedSettingsRouteImport } from './../../app/routes/_protected/settings';
 import { Route as ProtectedServersRouteImport } from './../../app/routes/_protected/servers';
 import { Route as ProtectedRequestsRouteImport } from './../../app/routes/_protected/requests';
 
@@ -46,6 +47,11 @@ const UnprotectedLoginRoute = UnprotectedLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => UnprotectedRoute,
 } as any);
+const ProtectedSettingsRoute = ProtectedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ProtectedRoute,
+} as any);
 const ProtectedServersRoute = ProtectedServersRouteImport.update({
   id: '/servers',
   path: '/servers',
@@ -60,6 +66,7 @@ const ProtectedRequestsRoute = ProtectedRequestsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/requests': typeof ProtectedRequestsRoute;
   '/servers': typeof ProtectedServersRoute;
+  '/settings': typeof ProtectedSettingsRoute;
   '/login': typeof UnprotectedLoginRoute;
   '/register': typeof UnprotectedRegisterRoute;
   '/verification': typeof UnprotectedVerificationRoute;
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/requests': typeof ProtectedRequestsRoute;
   '/servers': typeof ProtectedServersRoute;
+  '/settings': typeof ProtectedSettingsRoute;
   '/login': typeof UnprotectedLoginRoute;
   '/register': typeof UnprotectedRegisterRoute;
   '/verification': typeof UnprotectedVerificationRoute;
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/_unprotected': typeof UnprotectedRouteWithChildren;
   '/_protected/requests': typeof ProtectedRequestsRoute;
   '/_protected/servers': typeof ProtectedServersRoute;
+  '/_protected/settings': typeof ProtectedSettingsRoute;
   '/_unprotected/login': typeof UnprotectedLoginRoute;
   '/_unprotected/register': typeof UnprotectedRegisterRoute;
   '/_unprotected/verification': typeof UnprotectedVerificationRoute;
@@ -89,18 +98,27 @@ export interface FileRouteTypes {
   fullPaths:
     | '/requests'
     | '/servers'
+    | '/settings'
     | '/login'
     | '/register'
     | '/verification'
     | '/';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/requests' | '/servers' | '/login' | '/register' | '/verification' | '/';
+  to:
+    | '/requests'
+    | '/servers'
+    | '/settings'
+    | '/login'
+    | '/register'
+    | '/verification'
+    | '/';
   id:
     | '__root__'
     | '/_protected'
     | '/_unprotected'
     | '/_protected/requests'
     | '/_protected/servers'
+    | '/_protected/settings'
     | '/_unprotected/login'
     | '/_unprotected/register'
     | '/_unprotected/verification'
@@ -156,6 +174,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnprotectedLoginRouteImport;
       parentRoute: typeof UnprotectedRoute;
     };
+    '/_protected/settings': {
+      id: '/_protected/settings';
+      path: '/settings';
+      fullPath: '/settings';
+      preLoaderRoute: typeof ProtectedSettingsRouteImport;
+      parentRoute: typeof ProtectedRoute;
+    };
     '/_protected/servers': {
       id: '/_protected/servers';
       path: '/servers';
@@ -176,12 +201,14 @@ declare module '@tanstack/react-router' {
 interface ProtectedRouteChildren {
   ProtectedRequestsRoute: typeof ProtectedRequestsRoute;
   ProtectedServersRoute: typeof ProtectedServersRoute;
+  ProtectedSettingsRoute: typeof ProtectedSettingsRoute;
   ProtectedIndexRoute: typeof ProtectedIndexRoute;
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedRequestsRoute: ProtectedRequestsRoute,
   ProtectedServersRoute: ProtectedServersRoute,
+  ProtectedSettingsRoute: ProtectedSettingsRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
 };
 

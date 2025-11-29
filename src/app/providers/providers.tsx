@@ -5,6 +5,7 @@ import { QueryProvider } from './query-provider';
 import { ThemeProvider } from './theme-provider';
 
 import { I18nProvider } from '@/shared/config/i18n';
+import { Toaster } from '@/shared/ui';
 
 export interface ProvidersProps extends PropsWithChildren {}
 
@@ -16,6 +17,7 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
           <I18nProvider>{children}</I18nProvider>
         </ThemeProvider>
       </QueryProvider>
+      <Toaster />
     </AuthProvider>
   );
 };

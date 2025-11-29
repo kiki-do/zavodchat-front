@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
+import { useRegister } from './api';
 import { registerSchema } from './schema';
 
 import {
@@ -30,7 +31,7 @@ export const Register: FC = () => {
 
   const schema = registerSchema(t);
 
-  const navigate = useNavigate();
+  const registerMutation = useRegister();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -41,13 +42,15 @@ export const Register: FC = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof schema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-
-    navigate({ to: '/verification' });
-  }
+  const onSubmit = async (values: z.infer<typeof schema>) => {
+    await registerMutation.mutateAsync({
+      body: {
+        username: values.username,
+        displayname: values.displayName,
+        password: values.password,
+      },
+    });
+  };
 
   return (
     <Card className="w-full max-w-sm">
@@ -81,7 +84,10 @@ export const Register: FC = () => {
                     {t('displayNameDescription')}
                   </FormDescription>
                   <FormControl>
-                    <Input placeholder={t('passwordPlaceholder')} {...field} />
+                    <Input
+                      placeholder={t('displayNamePlaceholder')}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -123,5 +129,3 @@ export const Register: FC = () => {
     </Card>
   );
 };
-
-Register.displayName = 'Register';

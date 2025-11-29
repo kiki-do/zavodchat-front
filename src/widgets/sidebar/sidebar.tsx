@@ -3,6 +3,7 @@ import { Handshake, List, SmilePlus } from 'lucide-react';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { UserPanel } from './user-panel/user-panel';
 import { Channels } from './channels';
 
 import { Item, ItemGroup } from '@/shared/ui';
@@ -17,7 +18,7 @@ export const Sidebar: FC = () => {
   ];
 
   return (
-    <aside className="flex w-full gap-2 p-1">
+    <aside className="relative flex w-full gap-2 p-1">
       <Channels />
       <div className="bg-accent flex w-full flex-col overflow-y-auto rounded-md p-4">
         <ItemGroup className="space-y-2">
@@ -31,6 +32,7 @@ export const Sidebar: FC = () => {
           ))}
         </ItemGroup>
       </div>
+      <UserPanel />
     </aside>
   );
 };

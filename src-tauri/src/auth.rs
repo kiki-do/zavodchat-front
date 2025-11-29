@@ -15,5 +15,5 @@ pub fn get_token() -> Result<String, String> {
 #[tauri::command]
 pub fn clear_token() -> Result<(), String> {
     let entry = Entry::new("my-service", "token").map_err(|e| e.to_string())?;
-    entry.delete_credential().map_err(|e| e.to_string()) 
+    entry.delete_credential().map_err(|e| e.to_string())
 }

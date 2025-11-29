@@ -38,7 +38,10 @@ export interface paths {
             'Set-Cookie'?: string;
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            /** @example 3c3beb77-b54a-4733-8c5d-acd7b2680241 */
+            text: unknown;
+          };
         };
         /** @description Неверный логин/пароль */
         404: {
@@ -63,8 +66,44 @@ export interface paths {
       cookie?: never;
     };
     get?: never;
-    /** Регистрация в системе */
+    /** Изменение данных пользователя */
     put: {
+      parameters: {
+        query?: {
+          /** @description Аватар пользователя */
+          avatar?: string;
+        };
+        header?: never;
+        path?: never;
+        cookie: {
+          /** @description Токен авторизации */
+          zavodchat_token: parameters['zavodchat_token'];
+        };
+      };
+      requestBody?: {
+        content: {
+          'application/json': {
+            /** @example realnii_poc */
+            username?: string;
+            /** @example рЯльНыЙ____ПОЦЦЦЦЦ */
+            displayname?: string;
+            /** @example letmein123 */
+            password?: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Успешное изменение данных */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content?: never;
+        };
+      };
+    };
+    /** Регистрация в системе */
+    post: {
       parameters: {
         query?: never;
         header?: never;
@@ -100,42 +139,6 @@ export interface paths {
         };
         /** @description Логин занят */
         403: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    /** Изменение данных пользователя */
-    post: {
-      parameters: {
-        query?: {
-          /** @description Аватар пользователя */
-          avatar?: string;
-        };
-        header?: never;
-        path?: never;
-        cookie: {
-          /** @description Токен авторизации */
-          zavodchat_token: parameters['zavodchat_token'];
-        };
-      };
-      requestBody?: {
-        content: {
-          'application/json': {
-            /** @example realnii_poc */
-            username?: string;
-            /** @example рЯльНыЙ____ПОЦЦЦЦЦ */
-            displayname?: string;
-            /** @example letmein123 */
-            password?: string;
-          };
-        };
-      };
-      responses: {
-        /** @description Успешное изменение данных */
-        200: {
           headers: {
             [name: string]: unknown;
           };
@@ -200,9 +203,8 @@ export interface paths {
       cookie?: never;
     };
     get?: never;
-    put?: never;
     /** Изменить свой статус */
-    post: {
+    put: {
       parameters: {
         query: {
           /** @description Статус */
@@ -226,6 +228,7 @@ export interface paths {
         };
       };
     };
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -263,8 +266,9 @@ export interface paths {
         };
       };
     };
+    put?: never;
     /** Создать сервер */
-    put: {
+    post: {
       parameters: {
         query: {
           /** @description Имя сервера */
@@ -298,7 +302,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -336,9 +339,8 @@ export interface paths {
         };
       };
     };
-    put?: never;
     /** Изменить параметры сервера */
-    post: {
+    put: {
       parameters: {
         query?: {
           /** @description Имя сервера */
@@ -387,6 +389,7 @@ export interface paths {
         };
       };
     };
+    post?: never;
     /** Удалить сервер */
     delete: {
       parameters: {
@@ -445,7 +448,7 @@ export interface paths {
             [name: string]: unknown;
           };
           content: {
-            'application/json': components['schemas']['User'][];
+            'application/json': components['schemas']['ServerUser'][];
           };
         };
         /** @description Неправильный start (< 0, >= количеству пользователей) / слишком большой count */
@@ -472,7 +475,27 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get?: never;
+    /** Информация о пользователе на сервере */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Информация о пользователе */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            'application/json': components['schemas']['ServerUser'];
+          };
+        };
+      };
+    };
     put?: never;
     post?: never;
     /** Выгнать пользователя с сервера */
@@ -544,8 +567,9 @@ export interface paths {
         };
       };
     };
+    put?: never;
     /** Создать канал */
-    put: {
+    post: {
       parameters: {
         query?: {
           /** @description Имя канала */
@@ -581,7 +605,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -619,9 +642,8 @@ export interface paths {
         };
       };
     };
-    put?: never;
     /** Изменить параметры канала */
-    post: {
+    put: {
       parameters: {
         query?: {
           /** @description Имя канала */
@@ -647,6 +669,7 @@ export interface paths {
         };
       };
     };
+    post?: never;
     /** Удалить канал */
     delete: {
       parameters: {
@@ -719,8 +742,9 @@ export interface paths {
         };
       };
     };
+    put?: never;
     /** Отправить сообщение */
-    put: {
+    post: {
       parameters: {
         query?: never;
         header?: never;
@@ -756,7 +780,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -794,9 +817,8 @@ export interface paths {
         };
       };
     };
-    put?: never;
     /** Отредактировать сообщение */
-    post: {
+    put: {
       parameters: {
         query?: never;
         header?: never;
@@ -836,6 +858,7 @@ export interface paths {
         };
       };
     };
+    post?: never;
     /** Удалить сообщение */
     delete: {
       parameters: {
@@ -959,8 +982,9 @@ export interface paths {
         };
       };
     };
+    put?: never;
     /** Создать приглашение */
-    put: {
+    post: {
       parameters: {
         query?: {
           /** @description Дата и время истечения приглашения (автоматически удаляется из базы данных через некоторый промежуток). Может быть "never" */
@@ -1001,7 +1025,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -1053,9 +1076,8 @@ export interface paths {
         };
       };
     };
-    put?: never;
     /** Изменить параметры приглашения */
-    post: {
+    put: {
       parameters: {
         query?: {
           /** @description Дата и время истечения приглашения (автоматически удаляется из базы данных через некоторый промежуток). Может быть "never" */
@@ -1100,6 +1122,7 @@ export interface paths {
         };
       };
     };
+    post?: never;
     /** Удалить приглашение */
     delete: {
       parameters: {
@@ -1148,6 +1171,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
+    /** Пагинированный список забаненных пользователей */
     get: {
       parameters: {
         query: {
@@ -1183,7 +1207,9 @@ export interface paths {
         };
       };
     };
-    put: {
+    put?: never;
+    /** Забанить пользователя */
+    post: {
       parameters: {
         query?: {
           /** @description Дата и время истечения бана (автоматически удаляется из базы данных через некоторый промежуток). Может быть "never" - бан навсегда */
@@ -1230,7 +1256,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     /** Разбанить пользователя */
     delete: {
       parameters: {
@@ -1303,8 +1328,9 @@ export interface paths {
         };
       };
     };
+    put?: never;
     /** Создать новую роль */
-    put: {
+    post: {
       parameters: {
         query: {
           /** @description ID роли, перед (ниже) которой нужно вставить новую роль */
@@ -1344,7 +1370,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -1359,9 +1384,8 @@ export interface paths {
       cookie?: never;
     };
     get?: never;
-    put?: never;
     /** Изменить параметры роли */
-    post: {
+    put: {
       parameters: {
         query: {
           /** @description ID роли, перед (ниже) которой нужно вставить новую роль */
@@ -1398,6 +1422,7 @@ export interface paths {
         };
       };
     };
+    post?: never;
     /** Удалить роль */
     delete: {
       parameters: {
@@ -1425,52 +1450,6 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  '/servers/$server_id/users/$user_id/roles': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Получить роли пользователя */
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie: {
-          /** @description Токен авторизации */
-          zavodchat_token: parameters['zavodchat_token'];
-        };
-      };
-      requestBody?: never;
-      responses: {
-        /** @description Список ролей пользователя в порядке от самой старшей до самой младшей */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            'application/json': components['schemas']['Role'][];
-          };
-        };
-        /** @description Пользователь не является участником сервера */
-        404: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
   '/servers/$server_id/users/$user_id/roles/$role_id': {
     parameters: {
       query?: never;
@@ -1479,8 +1458,9 @@ export interface paths {
       cookie?: never;
     };
     get?: never;
+    put?: never;
     /** Назначить пользователю роль */
-    put: {
+    post: {
       parameters: {
         query?: never;
         header?: never;
@@ -1508,7 +1488,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     /** Отнять у пользователя роль */
     delete: {
       parameters: {
@@ -1639,8 +1618,9 @@ export interface paths {
       cookie?: never;
     };
     get?: never;
+    put?: never;
     /** Загрузить файл на сервер */
-    put: {
+    post: {
       parameters: {
         query: {
           /** @description Расширение файла */
@@ -1676,7 +1656,6 @@ export interface paths {
         };
       };
     };
-    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -1823,6 +1802,24 @@ export interface components {
       avatar?: string;
       /** @example 0 */
       status?: number;
+    };
+    ServerUser: {
+      /** @example 412 */
+      id?: number;
+      /** @example cyb3rc001 */
+      name?: string;
+      /** @example avatar_453912.png */
+      avatar?: string;
+      /** @example 0 */
+      status?: number;
+      /**
+       * @description role_id ролей пользователя на сервере
+       * @example [
+       *       3,
+       *       7
+       *     ]
+       */
+      roles?: number[];
     };
     Server: {
       /** @example Зона */

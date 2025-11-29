@@ -47,7 +47,7 @@ export const Verification: FC = () => {
 
   const onSubmit = async (values: FormValues) => {
     console.log(values);
-    auth.setIsAuthenticated(true);
+
     await router.invalidate();
     /**
      * @TODO Remove this. Just for example of response

@@ -1,12 +1,12 @@
-import type { FC, PropsWithChildren } from 'react';
-import { createContext, useContext, useMemo } from 'react';
+import type { Dispatch, FC, PropsWithChildren, SetStateAction } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
-import { useCookie } from '@/shared/hooks';
+import { StateRef, useRefState } from '@/shared/hooks';
+import { clearToken } from '@/shared/lib';
 
-const AUTH_COOKIE_NAME = 'zavodchat_token';
 export interface AuthContextValue {
-  isAuthenticated: boolean;
-  token: string | unknown;
+  internalRefState: StateRef<boolean>;
+
   logout: () => void;
 }
 
@@ -21,27 +21,18 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { value: token, remove: removeToken } = useCookie(AUTH_COOKIE_NAME);
+  // const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  const isAuthenticated = !!token;
+  const internalRefState = useRefState<boolean>(false);
 
-  const logout = () => {
-    removeToken({
-      path: '/',
-      secure: true,
-      sameSite: 'None',
-    });
+  const logout = async () => {
+    await clearToken();
     window.location.href = '/login';
   };
 
-  const value = useMemo(
-    () => ({
-      isAuthenticated,
-      token,
-      logout,
-    }),
-    [isAuthenticated, token]
-  );
+  const value = useMemo(() => ({ internalRefState, logout }), []);
+
+  console.debug('DEBUG (AuthProvider)', value);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

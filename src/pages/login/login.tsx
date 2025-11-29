@@ -42,7 +42,7 @@ export const Login: FC = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    loginMutation.mutateAsync({
+    await loginMutation.mutateAsync({
       body: {
         username: values.username,
         password: values.password,
@@ -52,7 +52,6 @@ export const Login: FC = () => {
 
   const auth = useAuth();
 
-  console.log(auth.isAuthenticated);
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>

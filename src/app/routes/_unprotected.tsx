@@ -4,7 +4,7 @@ import { UnrotectedLayout } from '../layouts';
 
 export const Route = createFileRoute('/_unprotected')({
   beforeLoad: ({ context, location }) => {
-    if (!context.auth.isAuthenticated) {
+    if (context.auth.internalRefState.current) {
       throw redirect({
         to: '/',
         search: {
