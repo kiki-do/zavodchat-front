@@ -4,13 +4,7 @@ import type { FC } from 'react';
 
 import { UserOnline } from './user-online';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Item,
-  ItemGroup,
-} from '@/shared/ui';
+import { Item, ItemGroup } from '@/shared/ui';
 
 export const UserPanel: FC = () => {
   const navigate = useNavigate();
