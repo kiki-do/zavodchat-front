@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlusCircle } from 'lucide-react';
-import type { FC } from 'react';
+import { type FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import z from 'zod';
 
 import { createServerSchema } from './schema';
 
+import { useCreateServer } from '@/pages/protected/servers/api/use-create-server';
 import {
   Button,
   Form,
@@ -31,6 +32,12 @@ export const CreateServerModal: FC = () => {
     keyPrefix: 'createServerModal',
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const hanleIsOpen = () => setIsOpen(prev => !prev);
+
+  const createMutation = useCreateServer();
+
   const schema = createServerSchema(t);
 
   const form = useForm<z.infer<typeof schema>>({
@@ -41,21 +48,33 @@ export const CreateServerModal: FC = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
+    await createMutation.mutateAsync({
+      params: {
+        query: {
+          name: values.name,
+        },
+        cookie: { zavodchat_token: '' },
+      },
+    });
+    form.reset();
+    setIsOpen(false);
+
     console.log(values);
   };
 
   return (
-    <Modal>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <ModalTrigger asChild>
-            <ItemMedia variant="icon" tooltip={t('title')} className="mt-auto">
-              <Button variant="ghost">
-                <PlusCircle />
-              </Button>
-            </ItemMedia>
-          </ModalTrigger>
-          <ModalContent>
+    <Modal open={isOpen} onOpenChange={hanleIsOpen}>
+      <ModalTrigger>
+        <ItemMedia variant="icon" tooltip={t('title')} className="mt-auto">
+          <Button variant="ghost">
+            <PlusCircle />
+          </Button>
+        </ItemMedia>
+      </ModalTrigger>
+
+      <ModalContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <ModalHeader>
               <ModalTitle>{t('title')}</ModalTitle>
             </ModalHeader>
@@ -73,14 +92,16 @@ export const CreateServerModal: FC = () => {
               )}
             />
             <ModalFooter>
-              <ModalClose asChild>
+              <ModalClose>
                 <Button variant="outline">{t('cancel')}</Button>
               </ModalClose>
-              <Button type="submit">{t('create')}</Button>
+              <Button disabled={createMutation.isPending} type="submit">
+                {t('create')}
+              </Button>
             </ModalFooter>
-          </ModalContent>
-        </form>
-      </Form>
+          </form>
+        </Form>
+      </ModalContent>
     </Modal>
   );
 };

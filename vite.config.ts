@@ -25,7 +25,7 @@ export default defineConfig(async () => ({
   server: {
     port: 1420,
     strictPort: false,
-    host: host || false,
+    host: host || '127.0.0.1',
     hmr: host
       ? {
           protocol: 'ws',
@@ -37,15 +37,6 @@ export default defineConfig(async () => ({
       // 3. tell Vite to ignore watching `src-tauri`
       ignored: ['**/src-tauri/**'],
     },
-
-    // proxy: {
-    //   // Все запросы к /api проксируем на твой бэкенд без проверки SSL
-    //   '/api': {
-    //     target: 'https://localhost:408', // твой бэкенд с плохим сертификатом
-    //     changeOrigin: true,
-    //     secure: false, // ← ЭТО КЛЮЧЕВОЕ! Отключает проверку SSL
-    //   },
-    // },
   },
 
   resolve: {

@@ -1,10 +1,11 @@
 import createFetchClient from 'openapi-fetch';
 import createClient from 'openapi-react-query';
 
+import { authorization } from './middleware/middleware';
 import { paths } from './openapi';
 
 export const client = createFetchClient<paths>({
-  baseUrl: import.meta.env.VITE_API_BASE_URL,
+  baseUrl: 'https://localhost:443',
   credentials: 'include',
 });
 
@@ -31,5 +32,7 @@ client.use({
     return response;
   },
 });
+
+client.use(authorization);
 
 export const $api = createClient(client);

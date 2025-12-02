@@ -8,8 +8,9 @@ export const useRegister = () => {
 
   return $api.useMutation('post', '/register', {
     onSuccess: async data => {
-      // router.invalidate();
-      // router.history.push('/');
+      router.invalidate();
+      if (data) await saveToken(data as string);
+      router.history.replace('/');
     },
   });
 };

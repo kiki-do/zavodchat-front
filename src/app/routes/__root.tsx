@@ -10,6 +10,8 @@ export const Route = createRootRouteWithContext<{
 }>()({
   beforeLoad: async ({ context }) => {
     const token = await getAccessToken();
+
+    console.log(token);
     if (token) {
       context.auth.internalRefState.current = true;
     }

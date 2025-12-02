@@ -50,8 +50,6 @@ export const Login: FC = () => {
     });
   };
 
-  const auth = useAuth();
-
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>

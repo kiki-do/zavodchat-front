@@ -1,8 +1,9 @@
-import type { Dispatch, FC, PropsWithChildren, SetStateAction } from 'react';
-import { createContext, useContext, useMemo, useState } from 'react';
+import { useRouter } from '@tanstack/react-router';
+import type { FC, PropsWithChildren } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
 import { StateRef, useRefState } from '@/shared/hooks';
-import { clearToken } from '@/shared/lib';
+import { clearToken, getAccessToken } from '@/shared/lib';
 
 export interface AuthContextValue {
   internalRefState: StateRef<boolean>;
@@ -21,18 +22,20 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
   const internalRefState = useRefState<boolean>(false);
 
   const logout = async () => {
     await clearToken();
-    window.location.href = '/login';
+    internalRefState.current = false;
   };
+
+  console.log(getAccessToken().then(data => data));
 
   const value = useMemo(() => ({ internalRefState, logout }), []);
 
   console.debug('DEBUG (AuthProvider)', value);
+
+  console.log('internalRefState.current', internalRefState.current);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

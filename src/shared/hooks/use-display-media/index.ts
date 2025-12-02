@@ -1,1 +1,1 @@
-export * from './use-display-media.ts';
+export * from './use-display-media';

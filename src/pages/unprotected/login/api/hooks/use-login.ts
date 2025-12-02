@@ -13,8 +13,8 @@ export const useLogin = () => {
     onSuccess: async data => {
       toast.success(t('loginSuccess'));
       await saveToken(data.text as string);
-      // await router.invalidate();
-      // router.history.push('/');
+      await router.invalidate();
+      router.history.push('/');
     },
     onError: error => {
       toast.error(t('loginError'));
